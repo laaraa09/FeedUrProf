@@ -1,0 +1,137 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>FeedUrProf</title>
+
+  <style>
+    html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    
+    .header-inner {
+      display: flex; 
+      align-items: center;       
+      justify-content: center;
+      padding: 10px;
+      min-height: 30px;
+      background-color: #98cdf5;
+    }
+
+   
+    .brand {
+      font-weight: 500; 
+      font-size: 3.15rem; 
+      color: #950000;
+      text-align: center;
+    }
+
+    .qr{
+     width: 450px;            /* se size */
+     height: 450px;
+
+     position: absolute;
+     top: 58%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+    }
+
+    #class-title {
+      position: absolute;
+      top: 16%;
+      left: 13%;
+      transform: translate(-50%, -50%);
+
+      font-size: 2.15rem;
+      font-weight: bold;
+      color: #000000;
+      
+    }
+
+    .button {
+      position: absolute;
+      top: 86%;
+      left: 90%;
+      transform: translate(-50%, -50%);
+      
+      background-color: #007b8b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      
+      width: 80px;
+      height: 40px;
+      font-size: 1.4rem;
+      
+    }
+
+
+    .button:hover {
+      background-color: #31c5ee; 
+      transform: translate(-50%, -50%) scale(1.05); 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+    }
+
+ 
+    footer {
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 12px;
+      min-height: 35px;
+      font-weight: 600; 
+      color: #950000;
+      background-color: #8abce1;
+    }
+
+  </style>
+
+  </head>
+
+<body>
+
+  <main>
+    <div class="header-inner"> 
+      <div class="brand">FeedUrProf</div> 
+    </div>
+
+    <img src="qr-icon.png" alt="qr code" class="qr">
+
+   
+  <button class="button" onclick="window.location.href='StartClass.html'">Close</button>
+   
+      
+ </main>
+
+  <footer>
+    FeedUrProf ©
+  </footer>
+
+  <h1 id="class-title"></h1>
+
+  <script>
+  const title = localStorage.getItem("selectedClassTitle");
+
+  if (title) {
+    document.getElementById("class-title").textContent = title;
+  }
+
+</script>
+
+</body>
+</html>

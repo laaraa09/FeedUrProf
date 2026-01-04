@@ -1,0 +1,336 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>FeedUrProf</title>
+
+  <style>
+    html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1; 
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;        
+      justify-content: center;
+      padding: 10px; 
+      min-height: 30px; 
+      background-color: #98cdf5;
+    }
+
+
+    .brand {
+      font-weight: 500; 
+      font-size: 3.15rem; 
+      color: #950000;
+      text-align: center;
+      
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;        
+      justify-content: space-between;
+      flex-direction: row;
+      
+      padding: 0 60px;            /* left right spaze */
+      margin-bottom: -50px;
+    }
+
+
+    .title {
+      font-weight: 500; 
+      font-size: 2.15rem; 
+      color: #000000;
+    }
+
+    .button-logout{
+  
+      background-color: #007b8b;
+      color: #f9f9f9;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      
+      width: 60px;
+      height: 35px;
+      font-size: 0.9rem;
+    }
+
+    .button-logout:hover {
+      background-color: #31c5ee; 
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+    }
+
+    .bar-container {
+      display: flex;           /*stack bars horizzontally */
+      flex-direction: column;
+      gap: 20px;               /*spaze between bars */
+      padding: 60px;
+
+      align-items: center; 
+    }
+
+    .bar {
+      background-color: #950000;
+      color: rgb(255, 255, 255);
+
+      height: 100px; 
+      padding: 0 30px;
+      border-radius: 8px;
+     
+      
+      display: flex;
+      
+      justify-content: space-between; /*text left icons on right */  
+      align-items: center;
+
+      font-size: 1.8rem; 
+
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .bar-input {
+      height: 30px;
+
+      margin-right: 40px;      /*same spacing az icons gap */
+      font-size: 1.8rem;
+      padding: 8px 12px;
+
+      box-sizing: border-box;
+    }
+    
+    
+    .bar-icons {
+      display: flex;
+      gap: 15px;                
+      margin-left: 15px;        /*spazing text/input */
+    }
+
+
+    .bar-container img{
+      width: 42px;            
+      height: 42px;
+      margin-left: 15px;      /*spaze between images */
+      cursor: pointer;        /*pointer on hover */
+      
+    }
+
+    
+    .clickable-image:hover {
+      transform: scale(1.3); 
+    }
+
+    .buttons {
+      position: fixed;
+      bottom: 70px;
+      right: 20px;
+      
+      background-color: #007b8b;
+      color: #f9f9f9;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      
+      width: 80px;
+      height: 40px;
+      font-size: 1.4rem;
+      
+    }
+   
+    .buttons:hover {
+      background-color: #31c5ee; 
+      transform: scale(1.06);  
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+  
+
+    /* footer */
+    footer {
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 12px;
+      min-height: 35px;
+      font-weight: 600; 
+      color: #950000;
+      background-color: #8abce1;
+    }
+
+  </style>
+
+<script>
+function removeBar(el) {
+  el.closest(".bar").remove();
+  saveBarsToStorage();
+}
+
+
+let activeBar = null;
+
+function addBar() {
+  const addBtn = document.getElementById("add-btn");
+  const saveBtn = document.getElementById("save-btn");
+  const barContainer = document.getElementById("bar-container");
+
+  addBtn.style.display = "none"; //addbtn invisible
+  saveBtn.style.display = "inline"; //savebtn vidible
+
+  activeBar = document.createElement("div");
+  activeBar.className = "bar";
+
+  activeBar.innerHTML = `
+    <input class="bar-input" type="text" placeholder="Enter class name">
+    <div class="bar-icons"></div>
+  `;
+
+  barContainer.appendChild(activeBar); //add
+  activeBar.querySelector("input").focus();
+}
+
+function saveBar() {
+  if (!activeBar) return;
+
+  const addBtn = document.getElementById("add-btn");
+  const saveBtn = document.getElementById("save-btn");
+  const input = activeBar.querySelector("input");
+
+  const name = input.value.trim() || "Untitled Class";
+
+  activeBar.innerHTML = `
+    <span class="bar-title">${name}</span>
+    <div class="bar-icons">
+      <img src="start-icon.png" alt="Start class" class="clickable-image" onclick="goToStartPage(this)">
+      <img src="edit-icon.png" alt="Edit class" class="clickable-image" onclick="goToEditPage(this)">
+      <img src="remove-icon.png" alt="Remove Bar" class="clickable-image" onclick="removeBar(this)">
+    </div>
+  `;
+
+  activeBar = null;
+  saveBtn.style.display = "none"; //reverse visiblty
+  addBtn.style.display = "inline";
+
+  saveBarsToStorage(); //sav locally
+}
+
+function saveBarsToStorage() {
+  const bars = document.querySelectorAll(".bar-title");
+  const titles = [];
+
+  bars.forEach(bar => {
+    titles.push(bar.textContent);
+  });
+
+  localStorage.setItem("classBars", JSON.stringify(titles));
+}
+
+
+function goToEditPage(img){
+  const bar = img.closest(".bar");
+  const title = bar.querySelector(".bar-title").textContent;
+
+  localStorage.setItem("selectedClassTitle", title); //pass titel
+  window.location.href = "index.html";
+}
+
+function goToStartPage(img){
+  const bar = img.closest(".bar");
+  const title = bar.querySelector(".bar-title").textContent;
+
+  localStorage.setItem("selectedClassTitle", title);
+  window.location.href = "QRCode.html";
+}
+
+
+</script>
+
+</head>
+
+<body>
+  
+  <main>
+    <div class="header-inner"> 
+      <div class="brand">FeedUrProf</div> 
+    </div>
+
+
+    <div class="title-row"> 
+      <h2 class="title">My Classes</h2>
+      <button class="button-logout" onclick="window.location.href='logIn.html'">Logout</button>
+    </div>
+
+    <div id="bar-container" class="bar-container"></div>
+
+    <button class="buttons" id="add-btn" onclick="addBar()" >Add+</button>
+    <button class="buttons" id="save-btn" style="display:none;" onclick="saveBar()">Save</button>
+   
+ </main>
+
+  <footer>
+    FeedUrProf ©
+  </footer>
+<script>
+
+  function loadBarsFromStorage() {
+  const data = JSON.parse(localStorage.getItem("classBars")) || [];
+  const container = document.getElementById("bar-container");
+
+  data.forEach(name => {
+    const bar = document.createElement("div");
+    bar.className = "bar";
+
+    const span = document.createElement("span"); //tile
+    span.className = "bar-title";
+    span.textContent = name;
+    bar.appendChild(span);
+
+    const icons = document.createElement("div"); //icon container
+    icons.className = "bar-icons";
+
+    const startImg = document.createElement("img"); //start ic
+    startImg.src = "start-icon.png";
+    startImg.alt = "Start class";
+    startImg.className = "clickable-image";
+    startImg.addEventListener("click", () => goToStartPage(startImg));
+    icons.appendChild(startImg);
+
+    const editImg = document.createElement("img"); //edit ic
+    editImg.src = "edit-icon.png";
+    editImg.alt = "Edit class";
+    editImg.className = "clickable-image";
+    editImg.addEventListener("click", () => goToEditPage(editImg));
+    icons.appendChild(editImg);
+
+    const removeImg = document.createElement("img"); //remov ic
+    removeImg.src = "remove-icon.png";
+    removeImg.alt = "Remove Bar";
+    removeImg.className = "clickable-image";
+    removeImg.addEventListener("click", () => removeBar(removeImg));
+    icons.appendChild(removeImg);
+
+    bar.appendChild(icons); //add icons
+    container.appendChild(bar); // add bar
+  });
+}
+
+document.addEventListener("DOMContentLoaded", loadBarsFromStorage); //runninh when DOM ready
+
+</script>
+
+</body>
+</html>
