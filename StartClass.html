@@ -2,35 +2,63 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>FeedUProf – Kurs gestartet</title>
+  <title>FeedUrProf – Kurs gestartet</title>
 
   <style>
+
+    html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    }
+ 
     body {
+      display: flex;
+      flex-direction: column;
+      
       font-family: Arial, sans-serif;
       background-color: #f2f2f2;
-      margin: 0;
-      padding: 0;
     }
 
-    header {
-      background-color: white;
-      padding: 15px;
+    main {
+      flex: 1; /* pushes footer to bottom */
+    }
+
+    .header-inner {
+      display: flex; 
+      align-items: center;      
+      justify-content: center;
+      padding: 10px;
+      min-height: 30px;  
+      background-color: #98cdf5;
+    }
+
+    
+    .brand {
+      font-weight: 500; 
+      font-size: 3.15rem; 
+      color: #950000;
       text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom: 1px solid #ccc;
+      
     }
 
-    .course-name {
-      padding: 15px;
-      font-size: 18px;
+    #class-title {
+      position: absolute;
+      top: 12%;
+      left: 8%;
+      transform: translate(-50%, -50%);
+
+      font-size: 2.15rem;
       font-weight: bold;
+      color: #000000;
+      
     }
 
     .content {
       display: flex;
-      padding: 15px;
+      padding: 70px;
       gap: 15px;
+      
     }
 
     .column {
@@ -40,8 +68,18 @@
       border-radius: 8px;
     }
 
+    .clickable-image{
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .clickable-image:hover{
+      transform: scale(1.2);
+    }
+
     .feedback-bar {
-      height: 15px;
+      height: 40px;
       margin: 8px 0;
     }
 
@@ -50,11 +88,55 @@
     .orange { background: #f0a44b; }
     .blue { background: #5fa8d3; }
 
+    .meme{
+      width: 110px;
+      height: 70px;
+    }
+
+    #questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .question-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+      padding: 10px 14px;
+      border-radius: 6px;
+      background-color: #ffffff;
+      color: rgb(0, 0, 0);
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    
+    .question-text {
+      flex: 1;
+      margin-right: 16px;
+    }
+
+
+    .question-icon {
+      width: 26px;
+      height: 26px;
+      cursor: pointer;
+    }
+    
+    .question-icon:hover {
+      transform: scale(1.2);
+    }
+
+
+
+
     /* END Button */
     .end-button {
       position: fixed;
-      bottom: 20px;
+      bottom: 70px;
       right: 20px;
+
       padding: 12px 20px;
       font-size: 16px;
       font-weight: bold;
@@ -68,23 +150,53 @@
 
     .end-button:hover {
       background-color: #c95454;
+      transform: scale(1.05); 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
     }
+
+    footer {
+      display: flex;
+      align-items: center; 
+      justify-content: center; 
+      padding: 12px;
+      min-height: 35px; 
+      font-weight: 600; 
+      color: #950000;
+      background-color: #8abce1;
+    }
+
+
   </style>
 </head>
 
-<body>
+<body onload="loadQuestionsForClass()">
+  <main>
 
-  <header>FeedUProf</header>
-
-  <div class="course-name">CourseName</div>
+  <div class="header-inner"> 
+      <div class="brand">FeedUrProf</div> 
+  </div>
 
   <div class="content">
 
     <div class="column">
       <h3>Questions</h3>
-      <p>Can you explain principle XX?</p>
-      <p>Can you explain YY?</p>
-    </div>
+
+      <div class="question-row">
+        <p>Can you explain principle XX?</p>
+        <img src="remove-icon.png" class="clickable-image" onclick="removeQ(this)">
+      </div>
+      
+      <div class="question-row">
+        <p>Can you explain YY?</p>
+        <img src="remove-icon.png" class="clickable-image" onclick="removeQ(this)">
+      </div>
+
+      <div class="question-row">
+        <p>Can you explain ZZ?</p>
+        <img src="remove-icon.png" class="clickable-image" onclick="removeQ(this)">
+      </div>
+
+     </div>
 
     <div class="column">
       <h3>Feedback</h3>
@@ -100,45 +212,105 @@
 
       <div class="feedback-bar blue" style="width:25%"></div>
       <p>too fast</p>
-
-      <h4 style="margin-top:20px">Send a Meme</h4>
-
+      
       <div style="display:flex; gap:10px; margin-top:10px">
         <div style="
           flex:1;
-          height:60px;
+          height:80px;
           border:2px dashed #aaa;
           display:flex;
           align-items:center;
           justify-content:center;
         ">
-          Meme 1
+          <img src="dontunderstand.JPG" class="meme">
         </div>
 
         <div style="
           flex:1;
-          height:60px;
+          height:80px;
           border:2px dashed #aaa;
           display:flex;
           align-items:center;
           justify-content:center;
         ">
-          Meme 2
+          <img src="good.JPG" class="meme">
         </div>
       </div>
     </div>
 
     <div class="column">
       <h3>My Questions</h3>
-      <p>────────── ▶</p>
-      <p>────────── ▶</p>
-      <p>────────── ▶</p>
+      <div id="questions-list"></div> 
     </div>
 
   </div>
 
+  
+
   <!-- END Button -->
-  <button class="end-button">END</button>
+  <button class="end-button" onclick="window.location.href='MyCourses.html'">END</button>
+
+  </main>
+
+  <footer>
+    FeedUrProf ©
+  </footer>
+
+  <h1 id="class-title"></h1>
+  <script>
+  const title = localStorage.getItem("selectedClassTitle");
+
+  if (title) {
+    document.getElementById("class-title").textContent = title;
+  }
+
+  function removeQ(img) {
+  const row = img.closest(".question-row");
+  row.remove();
+  }
+  
+  function loadQuestionsForClass() {
+  const className = localStorage.getItem("selectedClassTitle");
+  if (!className) return;
+
+  const allData = JSON.parse(localStorage.getItem("classQuestions")) || {};
+  const questions = allData[className] || [];
+
+  const list = document.getElementById("questions-list");
+  list.innerHTML = "";
+
+  questions.forEach((q, index) => {
+    const row = document.createElement("div");
+    row.className = "question-row";
+    row.style.display = "flex";
+    row.style.alignItems = "center";
+    row.style.justifyContent = "space-between";
+    row.style.marginBottom = "10px";
+
+    const questionSpan = document.createElement("span");
+    questionSpan.className = "question-text";
+    questionSpan.textContent = q.q;
+
+    const icon = document.createElement("img");
+    icon.src = "start-icon.png";
+    icon.alt = "Start question";
+    icon.className = "question-icon";
+    icon.style.cursor = "pointer";
+
+    icon.onclick = () => {
+      localStorage.setItem("selectedQuestionIndex", index);
+      window.location.href = "qestion_eval.html";
+    };
+
+    row.appendChild(questionSpan);
+    row.appendChild(icon);
+
+    list.appendChild(row);
+  });
+}
+  
+
+  </script>
 
 </body>
 </html>
