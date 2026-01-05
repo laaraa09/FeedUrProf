@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>FeedUrProf</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main>
+
+<div class="header-inner"> 
+      <div class="brand">FeedUrProf</div> 
+</div>
+
+<div class="content"> 
+
+<h2>My questions:</h2>
+
+<div id="questionList"></div>
+
+</div>
+
+<button class="buttons" onclick="addQuestion()">Add+</button>
+
+<button class="back-button" onclick="window.location.href='MyCourses.html'">Back</button>
+
+</main>
+
+<footer>
+    FeedUrProf ©
+</footer>
+
+<h1 id="class-title"></h1>
+
+  <script>
+  const title = localStorage.getItem("selectedClassTitle");
+
+  if (title) {
+    document.getElementById("class-title").textContent = title;
+  }
+
+</script>
+
+
+<script>
+
+function render() {
+const className = localStorage.getItem("selectedClassTitle");
+const allClasses = JSON.parse(localStorage.getItem("classQuestions")) || {};
+const questions = allClasses[className] || [];
+
+const list = document.getElementById("questionList");
+list.innerHTML = "";
+
+questions.forEach((q, idx) => {
+    const box = document.createElement("div");
+    box.className = "question-box";
+
+    box.innerHTML = `
+        <p><strong>Q.</strong> ${q.q}</p>
+        <p>A1. ${q.a1}</p>
+        <p>A2. ${q.a2}</p>
+        <p>A3. ${q.a3}</p>
+        <img src="edit-icon.png" alt="Edit Q" class="edit" onclick="editQuestion(${idx})">
+        <img src="remove-icon.png" alt="Remove Q" class="delete" onclick="deleteQuestion(${idx})">
+    `;
+
+    list.appendChild(box);
+});
+}
+
+function addQuestion() {
+    window.location.href = "add.html";
+}
+
+function editQuestion(index) {
+    localStorage.setItem("currentQuestion", index);
+    window.location.href = "questions.html";
+}
+
+function deleteQuestion(index) {
+    const className = localStorage.getItem("selectedClassTitle");
+    const allClasses = JSON.parse(localStorage.getItem("classQuestions")) || {};
+    const questions = allClasses[className] || [];
+
+    questions.splice(index, 1);
+    allClasses[className] = questions;
+    localStorage.setItem("classQuestions", JSON.stringify(allClasses));
+    render();
+}
+
+render();
+</script>
+
+</body>
+</html>

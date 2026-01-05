@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Question</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main>
+
+<div class="header-inner"> 
+      <div class="brand">FeedUrProf</div> 
+</div>
+
+<div class="content"> 
+
+<h2>Add new question</h2>
+
+<div class="question-box">
+    <div class="line">
+        <label>Q.</label>
+        <input id="q">
+    </div>
+
+    <div class="line">
+        <label>A1.</label>
+        <input id="a1">
+    </div>
+
+    <div class="line">
+        <label>A2.</label>
+        <input id="a2">
+    </div>
+
+    <div class="line">
+        <label>A3.</label>
+        <input id="a3">
+    </div>
+
+    <button class="save" onclick="save()">Save</button>
+</div>
+
+<div class="content"> 
+    
+<button class="back-button" onclick="back()">Back</button>
+
+</main>
+
+<footer>
+    FeedUrProf ©
+</footer>
+
+<h1 id="class-title"></h1>
+
+<script>
+
+const title = localStorage.getItem("selectedClassTitle");
+
+  if (title) {
+    document.getElementById("class-title").textContent = title;
+  }
+
+const className = localStorage.getItem("selectedClassTitle");
+
+function save() {
+    const q = document.getElementById("q").value;
+    const a1 = document.getElementById("a1").value;
+    const a2 = document.getElementById("a2").value;
+    const a3 = document.getElementById("a3").value;
+
+    if (!q) { alert("Question is required!"); return; }
+
+    let allClasses = JSON.parse(localStorage.getItem("classQuestions")) || {};
+    let questions = allClasses[className] || [];
+
+    questions.push({ q, a1, a2, a3 });
+    allClasses[className] = questions;
+    localStorage.setItem("classQuestions", JSON.stringify(allClasses));
+
+    window.location.href = "index.html";
+}
+
+function back() {
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
