@@ -15,9 +15,12 @@
 
 <div class="content"> 
 
-<h2>My questions:</h2>
+<h2>My questions</h2>
 
+
+<div class="questions"> 
 <div id="questionList"></div>
+</div>
 
 </div>
 
@@ -33,17 +36,58 @@
 
 <h1 id="class-title"></h1>
 
-  <script>
-  const title = localStorage.getItem("selectedClassTitle");
+<img src="edit-icon.png" alt="Edit title" id="edit-icon" class="edit-title" onclick="titleEdit()">
 
+<img src="save-icon.png" alt="Save title" id="save-icon" class="save-title" onclick="titleSave()">
+
+
+  <script>
+
+  const titleEl = document.getElementById("class-title");
+  const editIcon = document.getElementById("edit-icon");
+  const saveIcon = document.getElementById("save-icon");
+  
+  const title = localStorage.getItem("selectedClassTitle");
   if (title) {
-    document.getElementById("class-title").textContent = title;
+    titleEl.textContent = title;
+   }
+
+
+  function titleEdit() {
+    titleEl.contentEditable = "true";
+    titleEl.focus();
+
+    editIcon.style.display = "none";
+    saveIcon.style.display = "inline";
   }
 
-</script>
+  function titleSave() {
+    titleEl.contentEditable = "false";
+    const newTitle = titleEl.textContent.trim() || "Untitled class";
 
+    const index = Number(localStorage.getItem("editingClassIndex"));
+    const classBars = JSON.parse(localStorage.getItem("classBars")) || [];
 
-<script>
+    if (!Number.isNaN(index) && index >= 0 && index < classBars.length) {
+        const oldTitle = classBars[index]; // current title before rename
+        classBars[index] = newTitle;       // update classBars
+        localStorage.setItem("classBars", JSON.stringify(classBars));
+
+        // --- MOVE OLD QUESTIONS TO NEW TITLE ---
+        let allClasses = JSON.parse(localStorage.getItem("classQuestions")) || {};
+        if (allClasses[oldTitle]) {
+            allClasses[newTitle] = allClasses[oldTitle]; // move old questions
+            delete allClasses[oldTitle];                 // remove old key
+            localStorage.setItem("classQuestions", JSON.stringify(allClasses));
+        }
+    }
+
+    // Update selectedClassTitle for the edit page
+    localStorage.setItem("selectedClassTitle", newTitle);
+
+    saveIcon.style.display = "none";
+    editIcon.style.display = "inline";
+}
 
 function render() {
 const className = localStorage.getItem("selectedClassTitle");

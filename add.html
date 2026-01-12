@@ -17,33 +17,38 @@
 
 <h2>Add new question</h2>
 
-<div class="question-box">
+<div class="questions"> 
+
+
+<div class="question-box questions">
     <div class="line">
         <label>Q.</label>
-        <input id="q">
+        <input class="questions" id="q">
     </div>
 
     <div class="line">
         <label>A1.</label>
-        <input id="a1">
+        <input class="questions" id="a1">
     </div>
 
     <div class="line">
         <label>A2.</label>
-        <input id="a2">
+        <input class="questions" id="a2">
     </div>
 
     <div class="line">
         <label>A3.</label>
-        <input id="a3">
+        <input class="questions" id="a3">
     </div>
 
-    <button class="save" onclick="save()">Save</button>
+    <img src="save-icon.png" alt="Save Question" class="save" onclick="save()">
+</div>
+
 </div>
 
 <div class="content"> 
     
-<button class="back-button" onclick="back()">Back</button>
+<button class="back-button" onclick="back()">Cancel</button>
 
 </main>
 
@@ -61,9 +66,10 @@ const title = localStorage.getItem("selectedClassTitle");
     document.getElementById("class-title").textContent = title;
   }
 
-const className = localStorage.getItem("selectedClassTitle");
 
 function save() {
+    const className = localStorage.getItem("selectedClassTitle") || "Untitled class";
+
     const q = document.getElementById("q").value;
     const a1 = document.getElementById("a1").value;
     const a2 = document.getElementById("a2").value;
@@ -84,6 +90,9 @@ function save() {
 function back() {
     window.location.href = "index.html";
 }
+
+
+
 </script>
 
 </body>

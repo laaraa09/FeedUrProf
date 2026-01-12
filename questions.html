@@ -17,27 +17,30 @@
 
 <h2>Edit question</h2>
 
-<div class="question-box">
-    <button class="save" onclick="save()">Save</button>
+<div class="questions"> 
+
+
+<div class="question-box questions">
+   <img src="save-icon.png" alt="Save Question" class="save" onclick="save()">
 
     <div class="line">
         <label>Q.</label>
-        <input id="q">
+        <input class="questions" id="q">
     </div>
 
     <div class="line">
         <label>A1.</label>
-        <input id="a1">
+        <input class="questions" id="a1">
     </div>
 
     <div class="line">
         <label>A2.</label>
-        <input id="a2">
+        <input class="questions" id="a2">
     </div>
 
     <div class="line">
         <label>A3.</label>
-        <input id="a3">
+        <input class="questions" id="a3">
     </div>
 
     <img src="remove-icon.png" alt="Remove Q" class="delete" onclick="remove()">
@@ -45,7 +48,9 @@
 
 </div>
 
-<button class="back-button" onclick="back()">Back</button>
+</div>
+
+<button class="back-button" onclick="back()">Cancel</button>
 
 
 </main>
@@ -90,7 +95,6 @@ function save() {
         a3: document.getElementById("a3").value
     };
 
-    // Save back to localStorage
     allClasses[className] = questions;
     localStorage.setItem("classQuestions", JSON.stringify(allClasses));
 
