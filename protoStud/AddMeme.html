@@ -1,0 +1,208 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>FeedUrProf</title>
+
+  
+  <style>
+    html, body {
+    height: 100%;
+    margin: 0;
+  }
+  
+  main {
+    flex: 1; /*pushe footer bottom */
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    background: #e6e6e6;
+    font-family: system-ui, sans-serif;
+  }
+  
+  .content {
+    width: 360px;
+    height: 640px;
+    background: white;
+    border-radius: 28px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    padding: 24px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    gap: 20px;
+  }
+
+
+
+    .header-inner {
+      display: flex; 
+      align-items: center;    
+      justify-content: center;
+      padding: 10px; 
+      min-height: 30px; 
+      background-color: #a6cfee;
+      width: 390px;
+    }
+
+    .brand {
+      font-weight: 500; /* thickness 700 would be bold*/
+      font-size: 3.15rem; 
+      color: #950000;
+      text-align: center;
+      
+    }
+
+    .title {
+      font-weight: 400; 
+      font-size: 1.5rem; 
+      color: #000000;
+      text-align: center;
+      position: absolute;
+      top: 22%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    h1{
+      font-size: 22px;      
+      color: #333;          
+      font-weight: bold;
+
+      margin-top: 42px;  
+      margin-left: 10px;  
+     
+      text-align: left;   
+    }
+
+    .meme-picker {
+      width: 395px;              
+      height: 390px;
+      border: 2px solid #000;
+      border-radius: 12px;
+
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);  /* 4 cols */
+      grid-template-rows: repeat(3, 1fr);     /* 3 rows */
+      gap: 5px;
+      padding: 5px;
+
+      margin-top: -15px;
+    }
+    
+    .meme-picker img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: transform 0.2s;
+    }
+    
+    .meme-picker img:hover {
+      transform: scale(1.05);
+    }
+
+    .cancel {
+      padding: 5px;
+      font-size: 1.4rem;
+
+      background-color: #007b8b;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+
+      flex: 1;
+      height: 38px;
+      transition: background-color 0.2s;   
+
+      margin-top: 4px;
+    }
+    
+    .cancel:hover {
+      background-color: #31c5ee;
+    }
+    
+    footer {
+      margin-top: auto;     
+
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+
+      width: 390px;
+      padding: 12px;
+      min-height: 35px; 
+      font-weight: 600; 
+      color: #950000;
+      background-color: #a6cfee;
+    }
+
+  </style>
+  
+</head>
+
+<body>
+
+  <div class="content">
+
+  <main>
+
+    <div class="header-inner">
+      <div class="brand">FeedUrProf</div>
+    </div>
+
+    <div class="title">Mathe 1 - choose a meme</div>
+
+    <h1>Feedback</h1>
+
+    <div class="meme-picker">
+      <img src="meme1.jpg" class="meme-option">
+      <img src="meme2.jpg" class="meme-option">
+      <img src="meme3.jpg" class="meme-option">
+      <img src="meme4.jpg" class="meme-option">
+      <img src="meme5.jpg" class="meme-option">
+      <img src="meme6.jpg" class="meme-option">
+      <img src="meme7.jpg" class="meme-option">
+      <img src="meme8.jpg" class="meme-option">
+      <img src="meme9.jpg" class="meme-option">
+      <img src="meme10.jpg" class="meme-option">
+      <img src="meme11.jpg" class="meme-option">
+      <img src="meme12.jpg" class="meme-option">
+    </div>
+
+    <button class="cancel" onclick="window.location.href = 'CoursePage.html'">Cancel</button>
+      
+ </main>
+
+  <footer>
+    FeedUrProf ©
+  </footer>
+
+  </div>
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+  const memes = document.querySelectorAll(".meme-option");
+
+  memes.forEach(meme => {
+    meme.addEventListener("dblclick", () => {
+      localStorage.setItem("selectedMeme", meme.src); //sav to local storage
+
+      window.location.href = "CoursePage.html"; // back to main 
+    });
+  });
+});
+
+  </script>
+
+</body>
+</html>
