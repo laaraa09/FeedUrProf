@@ -62,12 +62,37 @@
       
     }
 
-    .button {
+    .c-button {
       position: absolute;
       top: 86%;
       left: 90%;
       transform: translate(-50%, -50%);
       
+      background-color: #007b8b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      
+      width: 100px;
+      height: 40px;
+      font-size: 1.4rem;
+      
+    }
+
+
+    .c-button:hover {
+      background-color: #31c5ee; 
+      transform: translate(-50%, -50%) scale(1.05); 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+    }
+
+    .b-button {
+      position: absolute;
+      top: 86%;
+      left: 10%;
+      transform: translate(-50%, -50%);
+         
       background-color: #007b8b;
       color: #fff;
       border: none;
@@ -81,12 +106,11 @@
     }
 
 
-    .button:hover {
+    .b-button:hover {
       background-color: #31c5ee; 
       transform: translate(-50%, -50%) scale(1.05); 
       box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
     }
-
  
     footer {
       display: flex; 
@@ -101,6 +125,18 @@
 
   </style>
 
+  <script>
+  function startClass(){
+  console.log(
+      "Starting class:",
+      localStorage.getItem("selectedClassTitle")
+    );
+
+    window.location.href = "StartClass.html";
+}
+
+</script>
+
   </head>
 
 <body>
@@ -113,7 +149,8 @@
     <img src="qr-icon.png" alt="qr code" class="qr">
 
    
-  <button class="button" onclick="window.location.href='StartClass.html'">Close</button>
+  <button class="c-button" onclick="startClass()">Continue</button>
+  <button class="b-button" onclick="window.location.href='MyCourses.html'">Back</button>
    
       
  </main>
