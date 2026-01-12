@@ -53,6 +53,21 @@
       
     }
 
+    .question{
+      font-size: 1.8rem;
+      color: #000000;
+    }
+
+    .answers{
+      font-size: 1.5rem;
+      color: #000000;
+    }
+
+    .percentage{
+      font-size: 1.2rem;
+      color: #000000;
+    }
+
     .bar-row {
         display: flex;
         align-items: center;     
@@ -64,12 +79,15 @@
     .bar {
     width: 100%;
     border: 1px solid black;
-    height: 20px;
+    height: 50px;
+    width: 1240px;
     margin-bottom: 5px;
     }
     
     .fill {
     height: 100%;
+    width: 0;                 /* start at 0 */
+    transition: width 10s ease; /* animate width changes */
     }
     
     
@@ -138,30 +156,30 @@
 
 <div class="content">
 
-<h2 id="questionTitle">Frage wird hier angezeigt</h2>
+<h2 class="question" id="questionTitle">Frage wird hier angezeigt</h2>
 
 <div id="chartContainer">
 
     <div class="bar-row">
     <div class="bar"><div class="fill" id="barA1"></div></div>
-    <p id="percentA1">0%</p>
+    <p class="percentage" id="percentA1">0%</p>
     </div>
 
-    <p id="labelA1">Antwort 1</p>
+    <p class="answers" id="labelA1">Antwort 1</p>
     
     <div class="bar-row">
     <div class="bar"><div class="fill" id="barA2"></div></div>
-    <p id="percentA2">0%</p>
+    <p class="percentage" id="percentA2">0%</p>
     </div>
 
-    <p id="labelA2">Antwort 2</p>
+    <p class="answers" id="labelA2">Antwort 2</p>
 
     <div class="bar-row">
     <div class="bar"><div class="fill" id="barA3"></div></div>
-    <p id="percentA3">0%</p>
+    <p class="percentage" id="percentA3">0%</p>
     </div>
 
-    <p id="labelA3">Antwort 3</p>
+    <p class="answers" id="labelA3">Antwort 3</p>
 </div>
 
 </div>
@@ -191,13 +209,18 @@ const percA1 = total === 0 ? 0 : Math.round(votes[0] / total * 100);
 const percA2 = total === 0 ? 0 : Math.round(votes[1] / total * 100);
 const percA3 = total === 0 ? 0 : Math.round(votes[2] / total * 100);
 
-document.getElementById("barA1").style.width = percA1 + "%";
-document.getElementById("barA2").style.width = percA2 + "%";
-document.getElementById("barA3").style.width = percA3 + "%";
-
+// update the percent labels immediately
 document.getElementById("percentA1").textContent = percA1 + "%";
 document.getElementById("percentA2").textContent = percA2 + "%";
 document.getElementById("percentA3").textContent = percA3 + "%";
+
+// animate the bar fills after a short delay
+setTimeout(() => {
+  document.getElementById("barA1").style.width = percA1 + "%";
+  document.getElementById("barA2").style.width = percA2 + "%";
+  document.getElementById("barA3").style.width = percA3 + "%";
+}, 100); // 100ms delay ensures the transition triggers
+
 
   
 
