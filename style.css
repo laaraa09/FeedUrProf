@@ -32,7 +32,7 @@ main {
 
 #class-title {
     position: absolute;
-    top: 12%;
+    top: 14%;
     left: 8%;
     transform: translate(-50%, -50%);
 
@@ -41,19 +41,67 @@ main {
     color: #000000;
 }
 
+.edit-title {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    position: absolute;
+    top: 16%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    
+}
+
+.edit-title:hover {
+    transform: translate(-50%, -50%) scale(1.06); 
+}
+
+.save-title {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    display:none;
+
+    position: absolute;
+    top: 16%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    
+}
+
+.save-title:hover {
+    transform: translate(-50%, -50%) scale(1.06); 
+}
+
 .content {
     display: flex; 
     flex-direction: column;
-    padding: 70px;
+    justify-content: center;  /* vertical center */
+    align-items: center;      /* horizontal center */
     gap: 15px;
+    padding: 70px;
+
       
 }
 
 .question-box {
-    border: 2px solid black;
+    background-color: #c94848;
+    border: 2px solid #950000;
+    color: rgb(255, 255, 255);
     padding: 15px;
     margin-bottom: 20px;
     position: relative;
+
+    width: 1000px;
+
+    border-radius: 40px; /* round corners */
+}
+
+.questions{
+    font-size: 1.5rem;
+    color: #000000;
 }
 
 .line {
@@ -66,15 +114,20 @@ label {
 }
 
 input {
-    width: 70%;
-    border: none;
-    border-bottom: 1px solid black;
+    font-size: 1.5rem;
 }
 
 .save {
+    width: 50px;
+    height: 50px;
+
     position: absolute;
     top: 10px;
     right: 10px;
+}
+
+.save:hover {
+    transform: scale(1.06); 
 }
 
 .delete {
