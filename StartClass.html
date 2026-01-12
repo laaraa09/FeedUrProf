@@ -81,6 +81,10 @@
     .feedback-bar {
       height: 40px;
       margin: 8px 0;
+
+      width: 0;
+      transition: width 16s ease; /* smooth fill */
+      border-radius: 6px;
     }
 
     .green { background: #6cc070; }
@@ -88,9 +92,42 @@
     .orange { background: #f0a44b; }
     .blue { background: #5fa8d3; }
 
-    .meme{
-      width: 110px;
-      height: 70px;
+    .meme1{
+      width: 210px;
+      height: 120px;
+
+      opacity: 0;
+
+      animation: growAndShrink 1.5s ease-in-out forwards;
+      animation-delay: 2s;
+    }
+
+    /* keyframes */
+    @keyframes growAndShrink {
+      0% {
+        opacity: 0;
+        transform: scale(1);
+      }
+      10% {
+        opacity: 1; /* fade in right as animation starts */
+      }
+      50% {
+        transform: scale(2.9); /* bigger */
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1); /* back to normal */
+      }
+    }
+
+    .meme2{
+      width: 210px;
+      height: 120px;
+
+      opacity: 0;
+
+      animation: growAndShrink 1.5s ease-in-out forwards;
+      animation-delay: 5s;
     }
 
     #questions-list {
@@ -111,7 +148,12 @@
       font-size: 1.2rem;
       margin-bottom: 10px;
     }
-    
+
+    .question-row.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .question-text {
       flex: 1;
       margin-right: 16px;
@@ -128,7 +170,10 @@
       transform: scale(1.2);
     }
 
-
+    .animate-question {
+      opacity: 0;  
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
 
 
     /* END Button */
@@ -181,17 +226,17 @@
     <div class="column">
       <h3>Questions</h3>
 
-      <div class="question-row">
+      <div class="question-row animate-question">
         <p>Can you explain principle XX?</p>
         <img src="remove-icon.png" class="clickable-image" onclick="removeQ(this)">
       </div>
       
-      <div class="question-row">
+      <div class="question-row animate-question">
         <p>Can you explain YY?</p>
         <img src="remove-icon.png" class="clickable-image" onclick="removeQ(this)">
       </div>
 
-      <div class="question-row">
+      <div class="question-row animate-question">
         <p>Can you explain ZZ?</p>
         <img src="remove-icon.png" class="clickable-image" onclick="removeQ(this)">
       </div>
@@ -216,31 +261,35 @@
       <div style="display:flex; gap:10px; margin-top:10px">
         <div style="
           flex:1;
-          height:80px;
+          height:120px;
           border:2px dashed #aaa;
           display:flex;
           align-items:center;
           justify-content:center;
         ">
-          <img src="dontunderstand.JPG" class="meme">
+          <img src="dontunderstand.JPG" class="meme1">
         </div>
 
         <div style="
           flex:1;
-          height:80px;
+          height:120px;
           border:2px dashed #aaa;
           display:flex;
           align-items:center;
           justify-content:center;
         ">
-          <img src="good.JPG" class="meme">
+          <img src="good.JPG" class="meme2">
         </div>
       </div>
     </div>
 
     <div class="column">
       <h3>My Questions</h3>
-      <div id="questions-list"></div> 
+
+      <div class="my-questions">
+        <div id="questions-list"></div> 
+      </div>
+      
     </div>
 
   </div>
@@ -258,6 +307,7 @@
 
   <h1 id="class-title"></h1>
   <script>
+    
   const title = localStorage.getItem("selectedClassTitle");
 
   if (title) {
@@ -268,8 +318,37 @@
   const row = img.closest(".question-row");
   row.remove();
   }
+
+  //
+  const rows = document.querySelectorAll(".question-row");
+  let index = 0;
+  
+  function showNext() {
+    if (index < rows.length) {
+      rows[index].classList.add("show");
+      index++;
+    }
+  }
+
+  setInterval(showNext, 3000); // first after 3 sec then every 3 seconds
+  //
+ 
+  //
+  const bars = document.querySelectorAll(".feedback-bar");
+
+  bars.forEach(bar => {
+    const targetWidth = bar.style.width; 
+    bar.style.width = "0";               // force start 0
+
+    setTimeout(() => {
+      bar.style.width = targetWidth;
+    }, 100);
+  });
+  //
+
   
   function loadQuestionsForClass() {
+    
   const className = localStorage.getItem("selectedClassTitle");
   if (!className) return;
 
@@ -299,7 +378,7 @@
 
     icon.onclick = () => {
       localStorage.setItem("selectedQuestionIndex", index);
-      window.location.href = "questionEval.html";
+      window.location.href = "qestion_eval.html";
     };
 
     row.appendChild(questionSpan);
