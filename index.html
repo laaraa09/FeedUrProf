@@ -102,10 +102,10 @@ questions.forEach((q, idx) => {
     box.className = "question-box";
 
     box.innerHTML = `
-        <p><strong>Q.</strong> ${q.q}</p>
-        <p>A1. ${q.a1}</p>
-        <p>A2. ${q.a2}</p>
-        <p>A3. ${q.a3}</p>
+        <p><strong>Q:</strong> ${q.q}</p>
+        <p>A1: ${q.a1}</p>
+        <p>A2: ${q.a2}</p>
+        <p>A3: ${q.a3}</p>
         <img src="edit-icon.png" alt="Edit Q" class="edit" onclick="editQuestion(${idx})">
         <img src="remove-icon.png" alt="Remove Q" class="delete" onclick="deleteQuestion(${idx})">
     `;
@@ -138,4 +138,5 @@ render();
 </script>
 
 </body>
+
 </html>
